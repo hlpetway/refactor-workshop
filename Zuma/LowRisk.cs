@@ -3,21 +3,14 @@ using System.Net;
 using System.Net.Mail;
 using Twilio;
 
-/*************************************************************************
- * filename: LowRisk.cs
- * namespace: ZumaLuma
- * created on: 4/1/2001
- * created by: t.howard
- * description: <include a detailed description of what this class does>
- ************************************************************************/
-
 namespace Zuma
 {
     public class LowRisk
     {
+
         public void SendMessage(string client, string messageType, bool email)
         {
-            // if we want to send the message by email then 
+            // if we want to send the message by email then
             // we need to create a new client, provide our
             // credentials, then we need to use get the message
             // type subjedt and body based on messageType provided,
@@ -34,12 +27,12 @@ namespace Zuma
                 {
                     if (info.Start > new DateTime(2011, 5, 10) && info.Country.Code == "USA")
                     {
-                        var addr = new MailAddress("no-reply@acme.com", "Acme MailRoom");
+                        var AcmeMailRoomAddress = new MailAddress("no-reply@acme.com", "Acme MailRoom");
 
-                        var mailClient = new SmtpClient("smtp.acme.net");
-                            mailClient.Credentials = new NetworkCredential("no-reply@acme.com", "[Password]");
-                            var name = Utils.GetDisplayName(client);
-                                var trimmedName = name.Trim();
+                        var acmeClient = new SmtpClient("smtp.acme.net");
+                            acmeClient.Credentials = new NetworkCredential("no-reply@acme.com", "[Password]");
+                            var clientName = Utils.GetDisplayName(client);
+                                var trimmedClientName = name.Trim();
                                 var address = Utils.GetEmailAddress(client);
                             var addr2 = new MailAddress(address, trimmedName);
                             var msg = new MailMessage(addr, addr2);
@@ -59,10 +52,10 @@ namespace Zuma
                         // legacy clients & clients outside of USA receive notifications
                         // in their web inbox
 
-                        var msg = Utils.GetMsg(messageType);
+                        var getMessage = Utils.GetMsg(messageType);
                         var sub = Utils.GetSub(messageType);
                         var appInbox = new AppInbox(client);
-                        appInbox.Send(sub, msg);
+                        appInbox.Send(sub, getMessage);
 
                         // log that we sent the message
                         var logger = Logging.CreateLogger();
@@ -71,40 +64,30 @@ namespace Zuma
                     }
                 }
             }
-/*
-            else if (customMessenger)
-            {
-                var c = new customMessengerClient("4c16ca7e-a612-4aab-b22a-2aeb8723f702", "ALFKI", null);
-                var msg = Utils.GetMsg3(messageType);
-                var r = Utils.GetNum2(client);
-                c.Send(msg, r);
 
-            }
-*/
             else
+
             {
-                // create a new TwilioRestClient instance
-                // first parameter is our Twilio account SID, second is our auth token
-                var c = new TwilioRestClient("AC47c7253af8c6fae4066c7fe3dbe4433c", "[AuthToken]");
 
-                // we need the users phone number
-                var n = Utils.GetNum(client);
+                const string accountSid = "AC47c7253af8c6fae4066c7fe3dbe4433c"
+                const string authToken = "[AuthToken]"
+                const string ourPhoneNumber = "+17245658130"
 
-                // we need the message type
-                var m = Utils.GetMsg2(messageType);
+                var twilioClient = new TwilioRestClient(accountSid, authToken);
 
-                // this is our phone number
-                var n2 = "+17245658130";
+                var userPhoneNumber = Utils.GetNum(client);
+
+                var messageType = Utils.GetMsg2(messageType);
 
                 // send the text message
                 // first parameter is our phone number
-                c.SendMessage(n2, n, m, cb);
+                userNumber.SendMessage(ourPhoneNumber, userPhoneNumber, messageType, message);
             }
 
 
         }
 
-        public void cb(Object message)
+        public void message(Object message)
         {
             string text;
             if (message is Message)

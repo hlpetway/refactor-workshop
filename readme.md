@@ -7,29 +7,29 @@ https://github.com/SeattleSoftwareCraftsmanship/Zuma
 2.) Clearly expressed intent
 3.) Eliminates Duplication
 4.) Has fewer elements
--Kent Beck
+  -Kent Beck
 
 There are a lot of differences of opinions on what are the four simple rules of design.
 
 ##Code Smells:
-###Magic Numbers or Strings, or etc.
+####Magic Numbers or Strings, or etc.
 Convert to a well named variable or constants
 
-###Ambigous Member Names
+####Ambigous Member Names
 ex. GetClient(a, b){}
 ex. xxxHelper
 
-###Code Comments
+####Code Comments
 easily outdated
 redundant if members have expressive naming, etc.
 Comments are fine if they explain why, and it better be surprising.
 
-###Commented Out Code/Dead Code
+####Commented Out Code/Dead Code
 Adds noise and leads to confusion.
 Think of Expedia example with:
 "remove this after R3"
 
-###Duplication
+####Duplication
 If you find yourself making changes in more than one place for one change.
 DRY - Don't Repeat Yourself
 Single Responsibility Principle
@@ -40,3 +40,7 @@ Single Responsibility Principle
 - Rename private variables/methods
 - Extract variables
 - Inlining variables
+
+###Example Problem:
+Convert 1 & 5 to Roman Numerals, and
+Return I and V in an array.
